@@ -13,3 +13,17 @@
 
 ### Workbench
 - Query 명령문 입력 후, 번개 모양 클릭. 번개+I는 한줄씩 실행, 번개 모양은 전체 실행
+
+### DML (Data Manipulation Language)
+- SQL 종류의 하나로, 데이터의 삽입, 삭제, 갱신 등을 처리
+
+### CRUD (Create, Retrieve, Update, Delete)
+- 기본적인 데이터 처리 기능인 생성, 읽기, 갱신, 삭제를 묶어서 일컫는 말
+  - select 컬럼명 from 테이블명 where 조건절;
+    - select name from city where Population>5000000;
+  - insert into 테이블명(컬럼명) values (값);
+    - insert into city (ID,Name,CountryCode, District, Population) values (20000,'Sample','KOR','Test',2000000);
+  - update 테이블명 set 컬럼명=값, ... where 조건절;
+    - update city set name='SampleRevised' where id='20000';
+  - delete from 테이블명 where 조건절;
+    - delete from city where id='20000';
