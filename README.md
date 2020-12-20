@@ -113,4 +113,9 @@
   - case when 조건값1 then <br>
          when 조건값2 then <br>
          else <br>
-    end 
+    end
+  - city 테이블에서 도명이 3자가 넘어가는 경우에 앞쪽 세 자만 대문자로 출력하고 도시의 인구를 같이 표시
+    -  select case when length(Name) > 3 then upper(mid(Name,1,3)) <br>
+       ->          when length(name)<=3 then UPEER(name) <br>
+       ->     end, population from city;
+  
