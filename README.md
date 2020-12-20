@@ -27,3 +27,14 @@
     - update city set name='SampleRevised' where id='20000';
   - delete from 테이블명 where 조건절;
     - delete from city where id='20000';
+
+### SQL
+
+- 중복성 제거(distinct)
+  - select distinct countrycode from city where countrycode='kor';
+  - kor 하나만 출력됨
+- 논리연산자(and, or, not, in, between)
+  -select * from city where countrycode in ('kor','chn') and (population between 1000000 and 5000000);
+- 결과값 정렬(order by)
+  - city 테이블에서 국가코드와 인구수를  출력. 정렬은 국가코드 별로 오름차순, 동일한 코드안에서는 인구 수의 역순으로 표시
+  - select countrycode, population from city order by countrycode, population desc;
