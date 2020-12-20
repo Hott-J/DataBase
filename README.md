@@ -90,3 +90,27 @@
     - select * from sampleView;
     - drop view sampleView; (뷰 삭제)
     - show tables; (지워졌는지 확인)
+
+- select into
+  - 쿼리 결과를 새 테이블로 만든다
+  - create table 테이블명 select * from 테이블명
+  - 기존에 존재하지 않는 테이블이 새로 생성
+  - city 테이블의 내용에서 국가코드가 'kor'인 도시를 찾아 city_new 테이블에 넣으시오.
+    - create table city_new select * from city where countrycode='kor';
+    - select * from city_new;
+
+- insert into select
+  - 쿼리결과를 기존의 테이블에 추가
+  - insert into 테이블명1 select * from 테이블명2 where 조건절;
+  - 두 개의 별도 쿼리를 하나로 합침
+  - city 테이블의 내용에서 국가코드가 'kor'인 도시를 찾아 city_kor 테이블에 넣는다
+    - show create table city; 스키마 조회
+    - create table city_kor (스키마 내용)
+    - insert into city_kor select * from city where countrycode='kor';
+
+- case when end
+  -  SQL의 조건문에 해당
+  - case when 조건값1 then
+         when 조건값2 then
+         else
+    end 
