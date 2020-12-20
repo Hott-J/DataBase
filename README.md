@@ -110,7 +110,7 @@
 
 - case when end
   -  SQL의 조건문에 해당
-  - case when 조건값1 then
-         when 조건값2 then
-         else
+  - case when 조건값1 then <br>
+         when 조건값2 then <br>
+         else <br>
     end 
