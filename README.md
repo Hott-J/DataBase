@@ -158,3 +158,49 @@
     - 집합 연산에 where 조건절 대체로 사용
     - city 테이블의 국가코드별 도시숫자를 구하시오(단, 70개 이상의 도시를 가지는 국가만 표시)
       - select countrycode, count(countrycode) from city group by countrycode having count(countrycode)>=70;
+      
+- 서브쿼리
+  - 쿼리문 내에 또다른 쿼리문이 있는 형태
+  - 서브쿼리는 메인쿼리에 포함되는 관계
+    - ()를 사용해 감싸는 형태
+    - order by를 사용하지 못함
+  - 다중행 연산자
+    - ALL 
+      - 여러 개의 레코드의 and 효과(가장 큰 값보다 큰)
+    - ANY
+      - 여러 개의 레코드의 or 효과 (가장 작은 값보다 큰)
+    - IN / EXISTS
+      - 결과값 중에 있는 것 중에서의 의미
+      - IN은 전체 레코드를 스캔하고, EXISTS는 존재여부만 확인하고 스캔하지 않음(상대적으로 빠름)
+      - 존재하는 TRUE / 존재하지 않으면 FALSE
+    - 국가명이 south korea의 국가코드를 찾아 이에 해당되는 도시의 수를 표시
+      - select count( * ) from city where countrycode=(Select code from country where name='south korea');
+    - city 테이블에서 국가코드가 'kor' 인 도시의 평균 인구 수보다 많은 도시들의 이름을 표시
+      - select name,population from city where population > (select avg(population) from city where countrycode='kor') order by poulation desc;
+    - 인구가 5000000명이 넘어가는 도시의 도시의 이름, 국가코드, 인구 수를 표시하시오(IN)
+      - select name, countrycode, population from city where (name,countrycode) in (select name,countrycode from city where population > 5000000);
+    - 한국의 모든 도시의 인구 수보다 많은 도시를 찾아 표시하시오
+      - select name, countrycode, population from city where population > all(select population from city where countrycode='kor');
+    - 국가코드가 'kor','chn','jpn' 인 도시명과 국가코드, 인구수르 출력 (exists)
+      - select name,countrycode,population from city where exists (select * from countrycode in ('kor','chn','jpn'));
+
+- 집합연산
+  - 각종 집합연산 지원
+  - 합집합(UNION), 교집합(INTERSECT), 차집합(MINUS)
+    - MySQL은 INTERSECT / MINUS 는 지원하지 않아, 다른 쿼리로 대체해야함
+  - UNION
+    - select 쿼리1 union select 쿼리2 union ...
+    - 두 쿼리의 결과 형식이 동일해야함(기본적으로 distinct 적용)
+    - union all 의 경우는 중복허용 하지 않아 전부다 출력
+    - 다른 테이블이라도 결과값의 형식만 일치하면 됨
+  - city테이블에서 국가코드가 'kor', 국가코드가 'chn'인 도시를 구해라
+    - select * from city where countrycode='kor' union select * from city where countrycode='chn';
+  - INTERSECT
+    - select 쿼리1 intersect select 쿼리2
+  - minus / except
+    - select 쿼리1 minus select 쿼리2
+  - country 테이블에서 기대수명이 80세 이상인 나라와 인구가 100만 이상인 나라를 구하고 공통되는 나라를 표시
+    - select code from country where lifeexpectancy >=80 and countrycode in (select distinct code from coutry where population>=1000000);
+  - city 테이블에서 인구가 500만이 넘는 도시의 국가명(단, 국가코드가 'chn'인 도시를 제외)을 표시
+    - select distinct countrycode from city where population>5000000 and countrycode not in (select distinct countrycode from city where countrycode='chn');
+  
