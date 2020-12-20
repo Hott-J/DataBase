@@ -28,7 +28,7 @@
   - delete from 테이블명 where 조건절;
     - delete from city where id='20000';
 
-### SQL
+### SQL의 DML
 
 - 중복성 제거(distinct)
   - select distinct countrycode from city where countrycode='kor';
@@ -59,3 +59,34 @@
       - select upper(mid(Name,1,3)) from country;
   - ROUND()
     - 레코드의 숫자컬럼값을 반올림해서 리턴
+- JOIN
+  - 서로 다른 테이블을 공통 컬럼을 기준으로 합치는 테이블 단위 연산
+  - 조인의 결과 테이블은 이전 테이블의 컬럼 수의 합과 같다
+  - select * from 테이블1 join 테이블2 on 테이블1.컬럼명 = 테이블2.컬럼명...
+  - city테이블과 country테이블을 조인하시오
+    -  select * from city join country on city.countrycode=country.code;
+  - 국가코드와 해당 나라의 GNP르 ㄹ표시
+    - select city.countrycode, country.gnp from city join country on city.countrycode=country.code;
+  - inner join
+    - join 시 NULL 허용하지 않음
+  - left join
+    - join 시 왼쪽 테이블의 NULL 포함
+  - right join
+    - join 시 오른쪽 테이블의 NULL 포함
+
+- 별명
+  - SQL 쿼리 결과생성시 컬럼명에 대한 별명을 사용해 표시하는 기능
+  - select 테이블명1.컬렴명1 AS 별명1, 테이블명2.컬럼명2 AS 별명2 FROM ...
+  - 조인할 때 많이 사용
+  - city 테이블과 country 테이블을 조인해서 국가코드가 'kor' 인 나라의 축약표시명과 정식명을 표시
+    -  select city.countrycode as abbr, country.name as fullname from city where city.countrycode='kor';
+    
+- 뷰
+  - SQL 쿼리의 결과값을 임시테이블로 저장해서 사용
+  - 사용용도가 끝나면 명시적으로 삭제
+  - create view 뷰명 as select ...
+  - 국가코드가 'kor'인 도시들의 국가코드와 국가명을 뷰로 생성(국가코드를 abbr, 국가명을 fullname)
+    - create view sampleView as select city.countrycode as abbr,country.name as fullname from city join country on city.countrycode=country.code where city.countrycode='kor';
+    - select * from sampleView;
+    - drop view sampleView; (뷰 삭제)
+    - show tables; (지워졌는지 확인)
