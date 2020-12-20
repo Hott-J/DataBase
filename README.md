@@ -65,7 +65,7 @@
   - select * from 테이블1 join 테이블2 on 테이블1.컬럼명 = 테이블2.컬럼명...
   - city테이블과 country테이블을 조인하시오
     -  select * from city join country on city.countrycode=country.code;
-  - 국가코드와 해당 나라의 GNP르 ㄹ표시
+  - 국가코드와 해당 나라의 GNP를 표시
     - select city.countrycode, country.gnp from city join country on city.countrycode=country.code;
   - inner join
     - join 시 NULL 허용하지 않음
