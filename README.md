@@ -119,3 +119,42 @@
        ->          when length(name)<=3 then UPEER(name) <br>
        ->     end, population from city;
   
+- Like 검색
+  - 정확한 키워드를 모를 경우 일부만으로 검색
+  - 와일드카드( %, _ )를 사용하여 패턴 매칭
+    - select 컬럼명 from 테이블명 where 컬럼명 like 패턴
+  - 와일드카드(Wildcard)
+    - % : 0-n 글자, _: 1 글자
+  - 논리조건자를 중복해서 사용하지 않는게 좋다. 부담이 크다
+  - city 테이블에서 국가코드가 k로 시작하는 국가코드를 표시하시오
+    - select countrycode from city where countrycode like 'k%';
+  - city 테이블에서 국가코드가 k로 시작하는 3글자 국가코드를 표시하시오
+    - select countrycode from city where countrycode like 'k__';
+
+- NULL 값
+  -  해당 컬럼의 값이 없다는 의미
+  - 널 값을 가지고 있는 컬럼을 검색하려면 is NULL
+  - 널이 아닌 값을 가지고 있는 컬럼을 검색하려면 is not NULL
+  - country 테이블에서 기대수명이 없는 국가개수를 표시
+    - select count(*) from country where LifeExpentancy is NULL;
+    
+- NULL 함수
+  -  숫자컬럼을 연산해야 할 때 NULL을 처리해주는 함수
+  - 주로 0으로 대체
+  - IFNULL(COALESCE) : MySQL
+  - 숫자연산/집합함수의 경우는 처리가 내장
+  - 직접 함수나 쿼리에 넣는 경우는 널 함수를 사용
+  - country 테이블의 기대수명의 평균값을 표시 (널 값 미반영/반영)
+    - select avg(lifeexpectancy) from country
+    - select avg(ifnull(lifeexpectancy,0)) from country;
+    
+- Group by / having
+  - group by
+    - 집합 함수와 같이 사용해 그룹별 연산을 적용
+    - select 컬럼명, 집합함수명(컬럼명) from 테이블명 group by 컬럼명;
+    - city 테이블의 국가코드별 도시숫자를 구하시오.
+      - select countrycode, count(countrycode) from city group by countrycode;
+  - having
+    - 집합 연산에 where 조건절 대체로 사용
+    - city 테이블의 국가코드별 도시숫자를 구하시오(단, 70개 이상의 도시를 가지는 국가만 표시)
+      - select countrycode, count(countrycode) from city group by countrycode having count(countrycode)>=70;
