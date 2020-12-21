@@ -319,3 +319,34 @@
   - truncate table 테이블명
     - 테이블 내용만 지움, 스키마는 유지, 전용명령어
     
+- 접근권한 설정
+  - DCL
+    - 권한 및 역할 설정하는 언어
+    - 특정 테이블에 대한 CRUD 권한 설정
+    - 사용자 sampleUser를 새로 하나 추가/삭제 하시오
+      - use mysql;
+      - select user, host from user;
+      - create user 'sampleUser'@'localhost'identified by '비밀번호';
+      - drop user 사용자명@호스트;
+      - flush privileges;
+    - sampleUser의 로컬 접속을 허용하시오.
+      - grant all privileges on world.* to sampleUser@localhost identified by '비밃번호';
+    - localhost의 sampleUser에게 world DB의 검색/추가권한을 부여하시오.
+      - grant select,insert world.* to sampleUser@localhost identified by '비밀번호';
+    - 모든 권한 삭제
+      - revoke all privileges on *.* from sampleUser@localhost;
+
+- 역할 설정
+  - 역할 생성
+    - create role 역할명;
+  - 역할에 대해 권한 설정
+    - grant crud on 테이블명 to 역할명;
+  - 사용자에게 역할 부여
+    - grant 역할 to 사용자명;
+    
+- 원격접속 설정
+  - MySQL을 동일시스템 외에 접근가능하도록 설정
+  - 사용자를 원격사용자로 등록
+  - my.ini 수정(bind-address 부분 주석처리)
+  - MySQL 서버 재시작
+  - 방화벽 3306포트 열기
