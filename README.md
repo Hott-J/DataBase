@@ -350,3 +350,18 @@
   - my.ini 수정(bind-address 부분 주석처리)
   - MySQL 서버 재시작
   - 방화벽 3306포트 열기
+  
+### SQL Advanced
+
+- 인덱스
+  - 검색을 빠르게 하기 위한 자료구조(주로 B트리계열)
+  - 기본키는 자동으로 인덱스설정
+  - 인덱스 on/off를 통해 검색 속도 창 ㅣ체감
+  - 조인시에도 영향을 줌
+  - key가 없으면 index도 없다.
+
+- 인덱스 설정
+  - 인덱스 추가/삭제
+    - create index 인덱스명 on 테이블명(컬럼명)
+    - create unique index 인덱스명 on 테이블명(컬럼명)
+    - alter table 테이블명 drop index 인덱스명
