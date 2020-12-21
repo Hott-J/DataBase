@@ -262,7 +262,28 @@
     - DEFAULT
       - 컬럼값이 입력되지 않으면 기본값 입력
     - 자동증가
-      -  BusinessCard의 ID 값을 자동증가되도록 지정
+      - BusinessCard의 ID 값을 자동증가되도록 지정
         - create table BusinessCard(ID int auto_increment, name varchar(255)...)
         - insert into BusinessCard(Name...) // ID를 파라미터로 넣지 않아도 된다.
       
+- 중복정보 제거
+  - 테이블 간의 정보는 중복되지 않아야 함
+  - 이를 위해 정규화를 통해 중복성 제거
+  - 중복성 제거 후 필요한 정보는 외래키를 통한 조인을 통해 필요한 정보를 구한다.
+  - city 테이블의 국가코드외에 국가명을 추가할 경우 생길 문제에 대해 말하시오
+    - 국가명을 south korea에서 republic of korea로 변경하려면, country 테이블의 name값과 city 테이블의 countryname 값에서 south korea를 찾아 모두 변경해야함
+  
+- 정규형
+  - 중복을 제거하기 위한 테이블 정의 규칙
+  
+- 참조무결성
+  - 외래키에 적용되는 규칙
+  - 외래키와 참조되는 원래 테이블의 키와 관계를 명시
+  - 외래키를 참조하면 원래 테이블에 해당 레코드 값이 반드시 존재해야함
+  - 만약 원래 레코드를 삭제하려면 참조하는 외래키 값을 먼저 널로 만들어야함
+  - city 테이블과 country 테이블과의 관계를 이용해 새로운 국가코드 zzz를 country에 추가하고 도시 yyy를 city 추가/삭제 하라
+    - insert into country(code,name) values('zzz','zzz');
+    - insert into city(name,countrycode) values ('yyy','zzz');
+    - delete from city where name='yyy' and countrycode='zzz';
+    - delete from country where code='zzz' and name='zzz';
+    - 순서를 바꾸면 에러가 난다.
