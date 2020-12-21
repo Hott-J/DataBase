@@ -204,3 +204,65 @@
   - city 테이블에서 인구가 500만이 넘는 도시의 국가명(단, 국가코드가 'chn'인 도시를 제외)을 표시
     - select distinct countrycode from city where population>5000000 and countrycode not in (select distinct countrycode from city where countrycode='chn');
   
+### DDL
+
+- DDL
+  - 데이터베이스와 테이블을 CRUD
+  - 테이블에 대한 정보는 메타데이터로 데이터사전에 저장 관리된다.
+
+- 데이터베이스 생성
+  - CREATE DATABASE 데이터베이스명;
+
+- 테이블 생성
+  - CREATE TABLE 테이블명 (컬럼명1 데이터타입(크기),컬럼명2...);
+  
+- sampleDB 데이터베이스를 정의하고 생성
+  - create database sampleDB;
+  
+- 컬럼으로 이름,주소,전화번호를 가지는 BusinessCard 테이블을 정의하고 생성(최대 길이 255)
+  - create table BusinessCard (Name Vachar(255), Address Varchar(255), Telephon Varchar(255));
+  
+- 자료형
+  - 정수형 (부호있음 / 부호없음)
+    - TINYINT
+    - INT
+    - BIGINT
+  - 실수형
+    - FLOAT
+    - DOUBLE
+    - DECIMAL
+  - 문자열
+    - CHAR
+    - VARCHAR
+  - TEXT 문자열
+    - TEXT
+    - MEDIUMTEXT
+    - LONGTEXT
+  - BLOB
+    - BLOB
+    - MEDIUMBLOB
+    - LARGEBLOB
+  - 시간 관련
+    - DATE
+    - TIME
+    - DATETIME
+    - TIMESTAMP
+    
+- 제약조건
+  - 입력 데이터의 제약조건을 걸어 해당되지 않는 데이터는 입력되지 않음
+    - NOT NULL
+    - UNIQUE
+      - 동일 x
+    - PRIMARY KEY
+      - 기본키 제약(UNIQUE, NOT NULL 이여야함)
+    - FOREIGN KEY
+      - 외래키 제약
+    - CHECK
+      - 입력값 체크(MySQL에서는 x)
+    - DEFAULT
+      - 컬럼값이 입력되지 않으면 기본값 입력
+    - 자동증가
+      -  BusinessCard의 ID 값을 자동증가되도록 지정
+        - create table BusinessCard(ID int auto_increment, name varchar(255)...)
+        - insert into BusinessCard(Name...) // ID를 파라미터로 넣지 않아도 된다.
+      
