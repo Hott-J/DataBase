@@ -287,3 +287,35 @@
     - delete from city where name='yyy' and countrycode='zzz';
     - delete from country where code='zzz' and name='zzz';
     - 순서를 바꾸면 에러가 난다.
+
+- 스키마 수정
+  - 이미 생성된 스키마에 대해 수정할 경우 사용한다.
+  - 테이블 컬럼 추가 / 삭제 /수정
+    - alter table 테이블명 add 컬렴명 데이터타입
+    - alter table 테이블명 drop column 컬럼명
+    - alter table 테이블명 change 컬럼명 new_컬럼명 데이터타입(컬럼명변경)
+    - alter table 테이블명 modify 컬럼명 데이터타입 (컬럼타입변경)
+  - 기본키 제약조건 추가 / 기본키 제약조건 삭제
+    - alter table 테이블명 add primary key (컬럼명)
+    - alter table 테이블명 drop primary key
+  - unique 제약조건 추가 / 삭제
+    - alter table 테이블명 add unique 컬럼명
+    - alter table 테이블명 drop unique
+  - 외래키 제약조건 추가 / 삭제
+    - alter table 테이블명 add foreign key (컬럼명) references 원테이블명(원컬럼명)
+    - alter table 테이블명 drop foreign key 컬럼명
+  - default 제약조건 추가 / 삭제
+    - alter table 테이블명 alter 컬럼명 set default 기본값
+    - alter table 테이블명 alter 컬럼명 drop default
+
+- 스키마 삭제
+  - 데이터베이스 삭제
+    - drop database 데이터베이스명
+  - 테이블 삭제
+    - drop table 테이블명
+      - 테이블 전체 삭제
+  - delete * from 테이블명
+    - 레코드를 일일히 하나씩 지움, 테이블 스키마는 유지
+  - truncate table 테이블명
+    - 테이블 내용만 지움, 스키마는 유지, 전용명령어
+    
