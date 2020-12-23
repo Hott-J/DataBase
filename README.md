@@ -96,17 +96,17 @@
   - create table 테이블명 select * from 테이블명
   - 기존에 존재하지 않는 테이블이 새로 생성
   - city 테이블의 내용에서 국가코드가 'kor'인 도시를 찾아 city_new 테이블에 넣으시오.
-    - create table city_new select * from city where countrycode='kor';
-    - select * from city_new;
+    - `create table city_new select * from city where countrycode='kor';`
+    - `select * from city_new;`
 
 - insert into select
   - 쿼리결과를 기존의 테이블에 추가
-  - insert into 테이블명1 select * from 테이블명2 where 조건절;
+  - `insert into 테이블명1 select * from 테이블명2 where 조건절;`
   - 두 개의 별도 쿼리를 하나로 합침
   - city 테이블의 내용에서 국가코드가 'kor'인 도시를 찾아 city_kor 테이블에 넣는다
-    - show create table city; 스키마 조회
-    - create table city_kor (스키마 내용)
-    - insert into city_kor select * from city where countrycode='kor';
+    - `show create table city; 스키마 조회`
+    - `create table city_kor (스키마 내용)`
+    - `insert into city_kor select * from city where countrycode='kor';`
 
 - case when end
   -  SQL의 조건문에 해당
@@ -115,28 +115,29 @@
          else <br>
     end
   - city 테이블에서 도명이 3자가 넘어가는 경우에 앞쪽 세 자만 대문자로 출력하고 도시의 인구를 같이 표시
-    -  select case when length(Name) > 3 then upper(mid(Name,1,3)) <br>
+    - ```  
+      select case when length(Name) > 3 then upper(mid(Name,1,3)) <br>
        ->          when length(name)<=3 then UPEER(name) <br>
        ->     end, population from city;
-  
+      ```
 - Like 검색
   - 정확한 키워드를 모를 경우 일부만으로 검색
   - 와일드카드( %, _ )를 사용하여 패턴 매칭
-    - select 컬럼명 from 테이블명 where 컬럼명 like 패턴
+    - `select 컬럼명 from 테이블명 where 컬럼명 like 패턴`
   - 와일드카드(Wildcard)
     - % : 0-n 글자, _: 1 글자
   - 논리조건자를 중복해서 사용하지 않는게 좋다. 부담이 크다
   - city 테이블에서 국가코드가 k로 시작하는 국가코드를 표시하시오
-    - select countrycode from city where countrycode like 'k%';
+    - `select countrycode from city where countrycode like 'k%';`
   - city 테이블에서 국가코드가 k로 시작하는 3글자 국가코드를 표시하시오
-    - select countrycode from city where countrycode like 'k__';
+    - `select countrycode from city where countrycode like 'k__';`
 
 - NULL 값
   -  해당 컬럼의 값이 없다는 의미
   - 널 값을 가지고 있는 컬럼을 검색하려면 is NULL
   - 널이 아닌 값을 가지고 있는 컬럼을 검색하려면 is not NULL
   - country 테이블에서 기대수명이 없는 국가개수를 표시
-    - select count(*) from country where LifeExpentancy is NULL;
+    - `select count(*) from country where LifeExpentancy is NULL;`
     
 - NULL 함수
   -  숫자컬럼을 연산해야 할 때 NULL을 처리해주는 함수
@@ -145,19 +146,19 @@
   - 숫자연산/집합함수의 경우는 처리가 내장
   - 직접 함수나 쿼리에 넣는 경우는 널 함수를 사용
   - country 테이블의 기대수명의 평균값을 표시 (널 값 미반영/반영)
-    - select avg(lifeexpectancy) from country
-    - select avg(ifnull(lifeexpectancy,0)) from country;
+    - `select avg(lifeexpectancy) from country`
+    - `select avg(ifnull(lifeexpectancy,0)) from country;`
     
 - Group by / having
   - group by
     - 집합 함수와 같이 사용해 그룹별 연산을 적용
     - select 컬럼명, 집합함수명(컬럼명) from 테이블명 group by 컬럼명;
     - city 테이블의 국가코드별 도시숫자를 구하시오.
-      - select countrycode, count(countrycode) from city group by countrycode;
+      - `select countrycode, count(countrycode) from city group by countrycode;`
   - having
     - 집합 연산에 where 조건절 대체로 사용
     - city 테이블의 국가코드별 도시숫자를 구하시오(단, 70개 이상의 도시를 가지는 국가만 표시)
-      - select countrycode, count(countrycode) from city group by countrycode having count(countrycode)>=70;
+      - `select countrycode, count(countrycode) from city group by countrycode having count(countrycode)>=70;`
       
 - 서브쿼리
   - 쿼리문 내에 또다른 쿼리문이 있는 형태
@@ -174,15 +175,15 @@
       - IN은 전체 레코드를 스캔하고, EXISTS는 존재여부만 확인하고 스캔하지 않음(상대적으로 빠름)
       - 존재하는 TRUE / 존재하지 않으면 FALSE
     - 국가명이 south korea의 국가코드를 찾아 이에 해당되는 도시의 수를 표시
-      - select count( * ) from city where countrycode=(Select code from country where name='south korea');
+      - `select count( * ) from city where countrycode=(Select code from country where name='south korea');`
     - city 테이블에서 국가코드가 'kor' 인 도시의 평균 인구 수보다 많은 도시들의 이름을 표시
-      - select name,population from city where population > (select avg(population) from city where countrycode='kor') order by poulation desc;
+      - `select name,population from city where population > (select avg(population) from city where countrycode='kor') order by poulation desc;`
     - 인구가 5000000명이 넘어가는 도시의 도시의 이름, 국가코드, 인구 수를 표시하시오(IN)
-      - select name, countrycode, population from city where (name,countrycode) in (select name,countrycode from city where population > 5000000);
+      - `select name, countrycode, population from city where (name,countrycode) in (select name,countrycode from city where population > 5000000);`
     - 한국의 모든 도시의 인구 수보다 많은 도시를 찾아 표시하시오
-      - select name, countrycode, population from city where population > all(select population from city where countrycode='kor');
+      - `select name, countrycode, population from city where population > all(select population from city where countrycode='kor');`
     - 국가코드가 'kor','chn','jpn' 인 도시명과 국가코드, 인구수르 출력 (exists)
-      - select name,countrycode,population from city where exists (select * from countrycode in ('kor','chn','jpn'));
+      - `select name,countrycode,population from city where exists (select * from countrycode in ('kor','chn','jpn'));`
 
 - 집합연산
   - 각종 집합연산 지원
@@ -194,15 +195,15 @@
     - union all 의 경우는 중복허용 하지 않아 전부다 출력
     - 다른 테이블이라도 결과값의 형식만 일치하면 됨
   - city테이블에서 국가코드가 'kor', 국가코드가 'chn'인 도시를 구해라
-    - select * from city where countrycode='kor' union select * from city where countrycode='chn';
+    - `select * from city where countrycode='kor' union select * from city where countrycode='chn';`
   - INTERSECT
-    - select 쿼리1 intersect select 쿼리2
+    - `select 쿼리1 intersect select 쿼리2`
   - minus / except
-    - select 쿼리1 minus select 쿼리2
+    - `select 쿼리1 minus select 쿼리2`
   - country 테이블에서 기대수명이 80세 이상인 나라와 인구가 100만 이상인 나라를 구하고 공통되는 나라를 표시
-    - select code from country where lifeexpectancy >=80 and countrycode in (select distinct code from coutry where population>=1000000);
+    - `select code from country where lifeexpectancy >=80 and countrycode in (select distinct code from coutry where population>=1000000);`
   - city 테이블에서 인구가 500만이 넘는 도시의 국가명(단, 국가코드가 'chn'인 도시를 제외)을 표시
-    - select distinct countrycode from city where population>5000000 and countrycode not in (select distinct countrycode from city where countrycode='chn');
+    - `select distinct countrycode from city where population>5000000 and countrycode not in (select distinct countrycode from city where countrycode='chn');`
   
 ### DDL
 
@@ -211,16 +212,16 @@
   - 테이블에 대한 정보는 메타데이터로 데이터사전에 저장 관리된다.
 
 - 데이터베이스 생성
-  - CREATE DATABASE 데이터베이스명;
+  - `CREATE DATABASE 데이터베이스명;`
 
 - 테이블 생성
-  - CREATE TABLE 테이블명 (컬럼명1 데이터타입(크기),컬럼명2...);
+  - `CREATE TABLE 테이블명 (컬럼명1 데이터타입(크기),컬럼명2...);`
   
 - sampleDB 데이터베이스를 정의하고 생성
-  - create database sampleDB;
+  - `create database sampleDB;`
   
 - 컬럼으로 이름,주소,전화번호를 가지는 BusinessCard 테이블을 정의하고 생성(최대 길이 255)
-  - create table BusinessCard (Name Vachar(255), Address Varchar(255), Telephon Varchar(255));
+  - `create table BusinessCard (Name Vachar(255), Address Varchar(255), Telephon Varchar(255));`
   
 - 자료형
   - 정수형 (부호있음 / 부호없음)
@@ -263,8 +264,8 @@
       - 컬럼값이 입력되지 않으면 기본값 입력
     - 자동증가
       - BusinessCard의 ID 값을 자동증가되도록 지정
-        - create table BusinessCard(ID int auto_increment, name varchar(255)...)
-        - insert into BusinessCard(Name...) // ID를 파라미터로 넣지 않아도 된다.
+        - `create table BusinessCard(ID int auto_increment, name varchar(255)...)`
+        - `insert into BusinessCard(Name...) // ID를 파라미터로 넣지 않아도 된다.`
       
 - 중복정보 제거
   - 테이블 간의 정보는 중복되지 않아야 함
@@ -282,41 +283,41 @@
   - 외래키를 참조하면 원래 테이블에 해당 레코드 값이 반드시 존재해야함
   - 만약 원래 레코드를 삭제하려면 참조하는 외래키 값을 먼저 널로 만들어야함
   - city 테이블과 country 테이블과의 관계를 이용해 새로운 국가코드 zzz를 country에 추가하고 도시 yyy를 city 추가/삭제 하라
-    - insert into country(code,name) values('zzz','zzz');
-    - insert into city(name,countrycode) values ('yyy','zzz');
-    - delete from city where name='yyy' and countrycode='zzz';
-    - delete from country where code='zzz' and name='zzz';
+    - `insert into country(code,name) values('zzz','zzz');`
+    - `insert into city(name,countrycode) values ('yyy','zzz');`
+    - `delete from city where name='yyy' and countrycode='zzz';`
+    - `delete from country where code='zzz' and name='zzz';`
     - 순서를 바꾸면 에러가 난다.
 
 - 스키마 수정
   - 이미 생성된 스키마에 대해 수정할 경우 사용한다.
   - 테이블 컬럼 추가 / 삭제 /수정
-    - alter table 테이블명 add 컬렴명 데이터타입
-    - alter table 테이블명 drop column 컬럼명
-    - alter table 테이블명 change 컬럼명 new_컬럼명 데이터타입(컬럼명변경)
-    - alter table 테이블명 modify 컬럼명 데이터타입 (컬럼타입변경)
+    - `alter table 테이블명 add 컬렴명 데이터타입`
+    - `alter table 테이블명 drop column 컬럼명`
+    - `alter table 테이블명 change 컬럼명 new_컬럼명 데이터타입(컬럼명변경)`
+    - `alter table 테이블명 modify 컬럼명 데이터타입 (컬럼타입변경)`
   - 기본키 제약조건 추가 / 기본키 제약조건 삭제
-    - alter table 테이블명 add primary key (컬럼명)
-    - alter table 테이블명 drop primary key
+    - `alter table 테이블명 add primary key (컬럼명)`
+    - `alter table 테이블명 drop primary key`
   - unique 제약조건 추가 / 삭제
-    - alter table 테이블명 add unique 컬럼명
-    - alter table 테이블명 drop unique
+    - `alter table 테이블명 add unique 컬럼명`
+    - `alter table 테이블명 drop unique`
   - 외래키 제약조건 추가 / 삭제
-    - alter table 테이블명 add foreign key (컬럼명) references 원테이블명(원컬럼명)
-    - alter table 테이블명 drop foreign key 컬럼명
+    - `alter table 테이블명 add foreign key (컬럼명) references 원테이블명(원컬럼명)`
+    - `alter table 테이블명 drop foreign key 컬럼명`
   - default 제약조건 추가 / 삭제
-    - alter table 테이블명 alter 컬럼명 set default 기본값
-    - alter table 테이블명 alter 컬럼명 drop default
+    - `alter table 테이블명 alter 컬럼명 set default 기본값`
+    - `alter table 테이블명 alter 컬럼명 drop default`
 
 - 스키마 삭제
   - 데이터베이스 삭제
-    - drop database 데이터베이스명
+    - `drop database 데이터베이스명`
   - 테이블 삭제
-    - drop table 테이블명
+    - `drop table 테이블명`
       - 테이블 전체 삭제
-  - delete * from 테이블명
+  - `delete * from 테이블명`
     - 레코드를 일일히 하나씩 지움, 테이블 스키마는 유지
-  - truncate table 테이블명
+  - `truncate table 테이블명`
     - 테이블 내용만 지움, 스키마는 유지, 전용명령어
     
 - 접근권한 설정
@@ -324,25 +325,25 @@
     - 권한 및 역할 설정하는 언어
     - 특정 테이블에 대한 CRUD 권한 설정
     - 사용자 sampleUser를 새로 하나 추가/삭제 하시오
-      - use mysql;
-      - select user, host from user;
-      - create user 'sampleUser'@'localhost'identified by '비밀번호';
-      - drop user 사용자명@호스트;
-      - flush privileges;
+      - `use mysql;`
+      - `select user, host from user;`
+      - `create user 'sampleUser'@'localhost'identified by '비밀번호';`
+      - `drop user 사용자명@호스트;`
+      - `flush privileges;`
     - sampleUser의 로컬 접속을 허용하시오.
-      - grant all privileges on world.* to sampleUser@localhost identified by '비밃번호';
+      - `grant all privileges on world.* to sampleUser@localhost identified by '비밃번호';`
     - localhost의 sampleUser에게 world DB의 검색/추가권한을 부여하시오.
-      - grant select,insert world.* to sampleUser@localhost identified by '비밀번호';
+      - `grant select,insert world.* to sampleUser@localhost identified by '비밀번호';`
     - 모든 권한 삭제
-      - revoke all privileges on *.* from sampleUser@localhost;
+      - `revoke all privileges on *.* from sampleUser@localhost;`
 
 - 역할 설정
   - 역할 생성
-    - create role 역할명;
+    - `create role 역할명;`
   - 역할에 대해 권한 설정
-    - grant crud on 테이블명 to 역할명;
+    - `grant crud on 테이블명 to 역할명;`
   - 사용자에게 역할 부여
-    - grant 역할 to 사용자명;
+    - `grant 역할 to 사용자명;`
     
 - 원격접속 설정
   - MySQL을 동일시스템 외에 접근가능하도록 설정
@@ -362,9 +363,9 @@
 
 - 인덱스 설정
   - 인덱스 추가/삭제
-    - create index 인덱스명 on 테이블명(컬럼명)
-    - create unique index 인덱스명 on 테이블명(컬럼명)
-    - alter table 테이블명 drop index 인덱스명
+    - `create index 인덱스명 on 테이블명(컬럼명)`
+    - `create unique index 인덱스명 on 테이블명(컬럼명)`
+    - `alter table 테이블명 drop index 인덱스명`
 
 - 메타데이터
   - 데이터를 위한 데이터
@@ -382,8 +383,8 @@
   - 문자인코딩 정보/메타데이터의 일종
   - 문자열의 값을 저장할 때 사용되는 기본정보
   - DB/테이블별로 별도 설정 가능
-  - status;
-  - show variables like character set_system;
+  - `status;`
+  - `show variables like character set_system;`
   
 - 콜레이션
   - 데이터를 정렬할 때 사용하는 정보
@@ -399,18 +400,18 @@
   
 - 데이터베이스 백업  
   - 전체 데이터베이스 백업
-    - mysqldump -u아이디 -p -all-databases > 덤프파일명.sql // > : 리다이렉션
+    - `mysqldump -u아이디 -p -all-databases > 덤프파일명.sql // > : 리다이렉션`
   - 특정 디비 백업
-      - mysqldump -u아이디 -p --databases DB명 > 덤프파일명.sql
+    - `mysqldump -u아이디 -p --databases DB명 > 덤프파일명.sql`
   - 특정 테이블 백업
-    - mysqldump -u아이디 -p DB명 테이블명 > 덤프파일명.sql
+    - `mysqldump -u아이디 -p DB명 테이블명 > 덤프파일명.sql`
   - 스키마만 백업
-    - mysqldump -u아이디 -p--no-data...
+    - `mysqldump -u아이디 -p--no-data...`
   - 데이터만 백업
-    - mysqldump -u아이디 -p --no-create-info...
+    - `mysqldump -u아이디 -p --no-create-info...`
   
 - 데이터베이스 복원
-  - mysql -u아이디 -p DB명 < 파일명
+  - `mysql -u아이디 -p DB명 < 파일명`
   
 - 데이터베이스 로그
   - 에러로그
@@ -516,8 +517,9 @@
   - 테이블단위 락
   - 줄단위 락
   
-- 격리
+- 격리레벨
   - 트랜잭션에 일관성없는 데이터를 허용하는 레벨
+  - 데이터의 안정성과 성능은 trade-off 관계
     - Read Uncommited
       - 트랜잭션이 처리되는 도중에 다른 트랜잭션이 해당 데이터를 읽기를 허용
       - 성능이 높지만 데이터의 안정성이 떨어짐
@@ -528,3 +530,31 @@
     - Serializable
       - 트랜잭션이 동시에 수행되는 것이 금지되고 순차적으로 순행
       - 성능 안좋음
+
+- 저장 프로시저
+  - SQL을 함수형태로 저장하고 사용하는 방법
+    - 정의
+    ```
+      CREATE PROCEDURE 프로시저명(인자 인자형,...) RETURNS 타입
+      BEGIN
+        SQL문장들
+      END
+      ```
+    - 호출
+      - `CALL 프로시저명;`
+    - 삭제
+      - `DROP PROCEDURE 프로시저명;`
+
+- 트리거
+  - 특정한 조건이 되면 자동으로 호출되는 저장 프로시저
+    - 레코드를 삭제하면 자동으로 참조무결성을 체크하는 트리거
+  - 정의
+  ```
+  CREATE TRIGGER 트리거명 BEFORE(또는 AFTER) CRUD ON 테이블명
+    FOR EACH ROW
+  BEGIN
+    변경 전(OLD.칼럼명) 또는 변경 후(NEW.칼럼명)을 이용한 처리
+  END
+  ```
+  - 삭제
+    - `DROP PROCEDURE 트리거명`
